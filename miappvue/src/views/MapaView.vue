@@ -1,43 +1,47 @@
-  <template>
+<template>
   <div class="contenedor">
-    <div class="contenedor-titulo">
-      <span class="titulo1">Mapa en Tiempo Real</span>
-    </div>
+    <MapSkeleton v-if="cargando" />
 
-    <div class="buscador">
-      <input v-model="filtroRuta" @input="buscarRuta" placeholder="🔎 Buscar ruta (ej: SM101)" />
-      <button @click="irAMiUbicacion">📍 Mi ubicación</button>
-    </div>
-
-    <div class="stats">
-      <div class="mini-carta" v-on:click="mostrarBusesActivos">
-        <div class="icon">🚌</div>
-        <h2>{{ cantidadBuses }}</h2>
-        <p>Buses activos</p>
+    <div v-else>
+      <div class="contenedor-titulo">
+        <span class="titulo1">Mapa en Tiempo Real</span>
       </div>
 
-      <div class="mini-carta" v-on:click="verRutasDisponibles">
-        <div class="icon">🗺</div>
-        <h2>{{ rutasDisponibles }}</h2>
-        <p>Rutas disponibles</p>
-      </div>
-    </div>
-
-    <div id="map"></div>
-
-    <div v-if="busSeleccionado" class="panelBus">
-      <div class="contenedor-icono-reportes" v-on:click="irAReportes" v-show="confirmarSesionMapa">
-        <i class='bx bx-chat'></i>
+      <div class="buscador">
+        <input v-model="filtroRuta" @input="buscarRuta" placeholder="🔎 Buscar ruta (ej: SM101)" />
+        <button @click="irAMiUbicacion">📍 Mi ubicación</button>
       </div>
 
-      <h2>🚌 Bus {{ busSeleccionado.ruta }}</h2>
-      <p><b>Conductor:</b> {{ busSeleccionado.conductor }}</p>
-      <p><b>Placa:</b> {{ busSeleccionado.placa }}</p>
-      <p><b>Capacidad:</b> {{ busSeleccionado.capacidad }} pasajeros</p>
-      <p><b>Estado:</b> {{ estadoDeLosBuses }}</p>
+      <div class="stats">
+        <div class="mini-carta" v-on:click="mostrarBusesActivos">
+          <div class="icon">🚌</div>
+          <h2>{{ cantidadBuses }}</h2>
+          <p>Buses activos</p>
+        </div>
 
-      <button @click="cerrarPanel">Cerrar</button>
-      <button v-show="confirmarSesionMapa" v-on:click="guardarRuta">Guardar ruta</button>
+        <div class="mini-carta" v-on:click="verRutasDisponibles">
+          <div class="icon">🗺</div>
+          <h2>{{ rutasDisponibles }}</h2>
+          <p>Rutas disponibles</p>
+        </div>
+      </div>
+
+      <div id="map"></div>
+
+      <div v-if="busSeleccionado" class="panelBus">
+        <div class="contenedor-icono-reportes" v-on:click="irAReportes" v-show="confirmarSesionMapa">
+          <i class='bx bx-chat'></i>
+        </div>
+
+        <h2>🚌 Bus {{ busSeleccionado.ruta }}</h2>
+        <p><b>Conductor:</b> {{ busSeleccionado.conductor }}</p>
+        <p><b>Placa:</b> {{ busSeleccionado.placa }}</p>
+        <p><b>Capacidad:</b> {{ busSeleccionado.capacidad }} pasajeros</p>
+        <p><b>Estado:</b> {{ estadoDeLosBuses }}</p>
+
+        <button @click="cerrarPanel">Cerrar</button>
+        <button v-show="confirmarSesionMapa" v-on:click="guardarRuta">Guardar ruta</button>
+      </div>
     </div>
   </div>
 </template>
@@ -47,10 +51,15 @@ import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import "leaflet-rotatedmarker";
 import "leaflet-routing-machine";
+import MapSkeleton from "@/components/MapSkeleton.vue";
 
 export default {
+    components: {
+        MapSkeleton
+    },
     data() {
         return {
+            cargando: true,
             map: null,
             mapaActivo: true,
             busSeleccionado: null,
@@ -71,26 +80,38 @@ export default {
     },
 
     async mounted() {
-        const [resBuses, resRutas, resParadas] = await Promise.all([
-            fetch('http://localhost:3000/buses'),
-            fetch('http://localhost:3000/rutas'),
-            fetch('http://localhost:3000/paradas')
-        ])
-        this.buses = await resBuses.json()
-        this.rutas = await resRutas.json()
-        this.paradas = await resParadas.json()
+        try {
+            // Se ejecutan tus peticiones
+            const [resBuses, resRutas, resParadas] = await Promise.all([
+                fetch('http://localhost:3000/buses'),
+                fetch('http://localhost:3000/rutas'),
+                fetch('http://localhost:3000/paradas')
+            ])
+            this.buses = await resBuses.json()
+            this.rutas = await resRutas.json()
+            this.paradas = await resParadas.json()
 
-        // cargar puntos de cada ruta
-        for (const ruta of this.rutas) {
-            const res = await fetch(`http://localhost:3000/rutas/${ruta.id}/puntos`)
-            const puntos = await res.json()
-            ruta.puntos = puntos.map(p => [p.latitud, p.longitud])
+            // Cargar puntos de cada ruta
+            for (const ruta of this.rutas) {
+                const res = await fetch(`http://localhost:3000/rutas/${ruta.id}/puntos`)
+                const puntos = await res.json()
+                ruta.puntos = puntos.map(p => [p.latitud, p.longitud])
+            }
+
+            this.cantidadBuses = this.buses.length
+            this.rutasDisponibles = this.rutas.length
+
+        } catch (error) {
+            console.error("Error cargando los datos de los buses:", error)
+        } finally {
+            // 1. Quitamos el skeleton
+            this.cargando = false;
+
+            // 2. Esperamos a que Vue "dibuje" el div #map y luego iniciamos Leaflet
+            this.$nextTick(() => {
+                this.iniciarMapa();
+            });
         }
-
-        this.cantidadBuses = this.buses.length
-        this.rutasDisponibles = this.rutas.length
-
-        this.iniciarMapa()
     },
 
     methods: {
