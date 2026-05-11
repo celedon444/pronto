@@ -80,23 +80,23 @@
           <div class="logo-item"><img src="../assets/alcaldia.png" alt="Empresa"></div>
           <div class="logo-item"><img src="../assets/policia.png" alt="Empresa"></div>
           <div class="logo-item"><img src="../assets/logo-cbn.png" alt="Empresa"></div>
+          <div class="logo-item"><img src="../assets/gaira-gourmet.png" alt="Empresa"></div>
           <div class="logo-item"><img src="../assets/sena.png" alt="Empresa"></div>
           <div class="logo-item"><img src="../assets/unimag.png" alt="Empresa"></div>
           <div class="logo-item"><img src="../assets/setp.png" alt="Empresa"></div>
           <div class="logo-item"><img src="../assets/minitransporte.png" alt="Empresa"></div>
           <div class="logo-item"><img src="../assets/gov.co.png" alt="Empresa"></div>
-          <div class="logo-item"><img src="../assets/contraloria.png" alt="Empresa"></div>
-
+  
           <div class="logo-item"><img src="../assets/500años.png" alt="Empresa"></div>
           <div class="logo-item"><img src="../assets/alcaldia.png" alt="Empresa"></div>
           <div class="logo-item"><img src="../assets/policia.png" alt="Empresa"></div>
           <div class="logo-item"><img src="../assets/logo-cbn.png" alt="Empresa"></div>
+          <div class="logo-item"><img src="../assets/gaira-gourmet.png" alt="Empresa"></div>
           <div class="logo-item"><img src="../assets/sena.png" alt="Empresa"></div>
           <div class="logo-item"><img src="../assets/unimag.png" alt="Empresa"></div>
           <div class="logo-item"><img src="../assets/setp.png" alt="Empresa"></div>
           <div class="logo-item"><img src="../assets/minitransporte.png" alt="Empresa"></div>
           <div class="logo-item"><img src="../assets/gov.co.png" alt="Empresa"></div>
-          <div class="logo-item"><img src="../assets/contraloria.png" alt="Empresa"></div>
         </div>
       </div>
     </section>
@@ -503,7 +503,7 @@ export default {
   font-size: 1.1rem;
   letter-spacing: 1px;
   text-transform: uppercase;
-  max-width: 85%;
+  max-width: 100%;
   margin: 0 auto 40px;
   border-radius: 4px;
   box-shadow: 0 4px 15px rgba(0, 113, 206, 0.3);

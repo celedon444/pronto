@@ -7,7 +7,7 @@
     <div v-else>
       <div class="contenedor-titulo">
         <span class="titulo1">
-        <span class="punto-vivo"></span> Mapa en vivo</span>
+        <span class="punto-vivo"></span> Monitoreo en vivo</span>
       </div>
 
       <div class="buscador">
@@ -650,5 +650,33 @@ export default {
   border: none !important;
   border-radius: 6px !important;
   padding: 4px 10px !important;
+}
+
+
+.data-card {
+  background: rgba(255, 255, 255, 0.05); /* Cristal muy claro */
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(0, 200, 250, 0.1);
+  color: white;
+  text-align: center;
+  padding: 10px;
+}
+.data-number {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #00c8fa; /* Cian brillante */
+  text-shadow: 0 0 10px rgba(0, 200, 250, 0.5);
+}
+
+.control-panel {
+  position: absolute;
+  top: 20px; left: 20px;
+  z-index: 10;
+  background: rgba(10, 15, 24, 0.7); /* Tu azul oscuro translúcido */
+  backdrop-filter: blur(10px); /* Efecto cristal */
+  border: 1px solid rgba(0, 200, 250, 0.2); /* Borde cian sutil */
+  border-radius: 12px;
+  padding: 15px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
 }
 </style>
