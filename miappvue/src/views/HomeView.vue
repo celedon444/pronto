@@ -1,5 +1,5 @@
 <template>
-  <div v-if="cargando" class="pantalla-carga">
+  <div v-if="cargando" class="pantalla-carga"> 
     <div class="escena-animacion">       
       <div class="logo-carga">
         <h1 class="texto-pronto">PRONTO</h1>
@@ -107,32 +107,47 @@
 
 
 <script>
-
-
 export default {
   data() {
     return {
-      cargando: true    // esta es la variable que controla la pantalla de carga
+      cargando: true // muestra la pantalla de carga del bus mientras se cargan los recursos
     };
   },
 
   mounted() {
-    setTimeout(() => {             // agregamos un retraso de 2.5 segundos para que el usuario
-      this.cargando = false;       // pueda apreciar la animación del bus antes de entrar al sitio web
-    }, 2500);
+    Promise.all([
+      this.esperarCargaTotalDelSitio(),
+      this.tiempoMinimoAnimacion(2000) // aqui ponemos 2 segundos de cotesia para que la animacion no se corte de golpe 
+    ])
+    .then(() => {
+      this.cargando = false;   // una vez carguen los recursos el sitio ya está listo y se oculta la animacion
+    })
+    .catch((error) => {
+      console.error("Error durante la inicialización de la vista:", error);
+      this.cargando = false; // apagamos el loader por seguridad si algo falla
+    });
   },
 
   methods: {
+    esperarCargaTotalDelSitio() {    // promesa: escucha al navegador hasta que descargue los recursos
+      return new Promise((resolve) => {
+        if (document.readyState === 'complete') {
+          resolve(); // cuando ya cargó todo, avanzamos inmediatamente
+        } else {
+          window.addEventListener('load', () => resolve());
+        }
+      });
+    },
+
+    tiempoMinimoAnimacion(ms) {  // promesa: garantiza un retraso minimo controlado para que la experiencia visual sea limpia
+      return new Promise((resolve) => setTimeout(resolve, ms));
+    },
+
     irAlMapa: function() {
       const validarSesionActiva = localStorage.getItem('SesionActiva');
-
-      if (validarSesionActiva === 'true') {
-        localStorage.setItem('verificarGuardarRuta', 'true');
-        this.$router.push("/mapa");
-      } else {
-        localStorage.setItem('verificarGuardarRuta', 'false');
-        this.$router.push("/mapa");
-      }
+      
+      localStorage.setItem('verificarGuardarRuta', validarSesionActiva === 'true' ? 'true' : 'false');
+      this.$router.push("/mapa");
     },
 
     irANoticias() {
@@ -145,7 +160,7 @@ export default {
 
 <style scoped>
 
-.pantalla-carga {      /*desde aquí son estilos de progress bar / pantalla de espera (celedon)*/
+.pantalla-carga {      /*desde aquí son estilos de progress spinner / pantalla de espera (celedon)*/
   position: fixed;
   top: 0;
   left: 0;
