@@ -98,7 +98,7 @@ export default {
       }
 
       try {
-        const respuesta = await fetch('http://localhost:3000/auth/login', {
+        const respuesta = await fetch(`${process.env.VUE_APP_API_URL}/auth/login`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -184,7 +184,7 @@ export default {
       }
 
       try {
-        const respuesta = await fetch('http://localhost:3000/auth/recuperar', {
+        const respuesta = await fetch(`${process.env.VUE_APP_API_URL}/auth/recuperar`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
