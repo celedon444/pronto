@@ -3,13 +3,13 @@ require('dotenv').config()
 
 // Cambiamos createConnection por createPool
 const conexion = mysql.createPool({
-    host: process.env.DB_HOST,
-    port: process.env.DB_PORT,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME,
+    host: 'mysql.railway.internal', // El host interno de tu delfín en Railway
+    port: 3306,
+    user: 'root',
+    password: 'CoKvZqZatICKPXphbadPYyhRggucVlyv', // Tu contraseña real de la captura anterior
+    database: 'railway', // El nombre de la base de datos por defecto de Railway
     waitForConnections: true,
-    connectionLimit: 10, // Máximo de conexiones simultáneas
+    connectionLimit: 10,
     queueLimit: 0
 })
 
