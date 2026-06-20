@@ -38,7 +38,8 @@ export default {
     async mounted() {
         try {
             const token = localStorage.getItem('token')
-            const respuesta = await fetch('http://localhost:3000/buses', {
+            const baseUrl = process.env.VUE_APP_API_URL || 'http://localhost:3000'
+            const respuesta = await fetch(`${baseUrl}/buses`, {
                 method: 'GET',
                 headers: {
                     'Authorization': `Bearer ${token}`,

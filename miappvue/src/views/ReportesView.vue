@@ -60,7 +60,8 @@ export default {
         async cargarReportes() {
             try {
                 const token = localStorage.getItem('token')
-                const respuesta = await fetch('http://localhost:3000/reportes', {
+                const baseUrl = process.env.VUE_APP_API_URL || 'http://localhost:3000'
+                const respuesta = await fetch(`${baseUrl}/reportes`, {
                     headers: { 'Authorization': `Bearer ${token}` }}
                 )
                 const datos = await respuesta.json()
@@ -77,7 +78,8 @@ export default {
             }
             try {
                 const token = localStorage.getItem('token')
-                await fetch('http://localhost:3000/reportes', {
+                const baseUrl = process.env.VUE_APP_API_URL || 'http://localhost:3000'
+                await fetch(`${baseUrl}/reportes`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',

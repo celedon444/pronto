@@ -1,6 +1,6 @@
 const fs = require('fs')
 const path = require('path')
-const conexion = require('./db')
+const pool = require('./db')
 
 // función para leer y convertir archivos del frontend
 function leerDato(archivo) {
@@ -22,17 +22,17 @@ async function insertar() {
     // insertar rutas
     for (const ruta of rutas) {
         const codigo = ruta.nombre.split(' - ')[0]
-        const [result] = await conexion.promise().query(
-            'INSERT INTO rutas (codigo, nombre) VALUES (?, ?)',
+        const result = await pool.query(
+            'INSERT INTO rutas (codigo, nombre) VALUES ($1, $2) RETURNING id',
             [codigo, ruta.nombre]
         )
-        const idRuta = result.insertId
+        const idRuta = result.rows[0].id
 
         // insertar puntos de la ruta
         for (let i = 0; i < ruta.puntos.length; i++) {
             const [lat, lng] = ruta.puntos[i]
-            await conexion.promise().query(
-                'INSERT INTO ruta_puntos (id_ruta, latitud, longitud, orden) VALUES (?, ?, ?, ?)',
+            await pool.query(
+                'INSERT INTO ruta_puntos (id_ruta, latitud, longitud, orden) VALUES ($1, $2, $3, $4)',
                 [idRuta, lat, lng, i]
             )
         }
@@ -42,11 +42,12 @@ async function insertar() {
     // insertar buses
     for (const bus of buses) {
         const codigo = bus.ruta.split(' - ')[0]
-        const [[ruta]] = await conexion.promise().query(
-            'SELECT id FROM rutas WHERE codigo = ?', [codigo]
+        const rutaResult = await pool.query(
+            'SELECT id FROM rutas WHERE codigo = $1', [codigo]
         )
-        await conexion.promise().query(
-            'INSERT INTO buses (conductor, placa, capacidad, estado, latitud, longitud, id_ruta) VALUES (?, ?, ?, ?, ?, ?, ?)',
+        const ruta = rutaResult.rows[0]
+        await pool.query(
+            'INSERT INTO buses (conductor, placa, capacidad, estado, latitud, longitud, id_ruta) VALUES ($1, $2, $3, $4, $5, $6, $7)',
             [bus.conductor, bus.placa, bus.capacidad, bus.estado, bus.posicion[0], bus.posicion[1], ruta.id]
         )
         console.log(`Bus insertado: ${bus.placa}`)

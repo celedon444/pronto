@@ -1,22 +1,28 @@
 const express = require('express')
 const router = express.Router()
-const conexion = require('../db')
+const pool = require('../db')
 const verificarToken = require('../middleware/verificarToken')
 
-router.get('/', verificarToken, (req, res) => {
-    conexion.query('SELECT * FROM reportes ORDER BY creado_en DESC', (error, resultados) => {
-        if (error) return res.status(500).json({ error: 'Error al obtener reportes' })
-        res.json(resultados)
-    })
+router.get('/', verificarToken, async (req, res) => {
+    try {
+        const { rows } = await pool.query('SELECT * FROM reportes ORDER BY creado_en DESC')
+        res.json(rows)
+    } catch (error) {
+        console.error(error)
+        res.status(500).json({ error: 'Error al obtener reportes' })
+    }
 })
 
-router.post('/', verificarToken, (req, res) => {
+router.post('/', verificarToken, async (req, res) => {
     const { usuario, mensaje } = req.body
     if (!usuario || !mensaje) return res.status(400).json({ error: 'Datos incompletos' })
-    conexion.query('INSERT INTO reportes (usuario, mensaje) VALUES (?, ?)', [usuario, mensaje], (error) => {
-        if (error) return res.status(500).json({ error: 'Error al guardar reporte' })
+    try {
+        await pool.query('INSERT INTO reportes (usuario, mensaje) VALUES ($1, $2)', [usuario, mensaje])
         res.json({ mensaje: 'Reporte guardado' })
-    })
+    } catch (error) {
+        console.error(error)
+        res.status(500).json({ error: 'Error al guardar reporte' })
+    }
 })
 
 module.exports = router

@@ -24,6 +24,10 @@
             <div v-on:click="ejecuarValidacionReporte" v-show="contenidoMenu">
                 <ul class="txt-dentro-menuHamburguesa">Reportes</ul>
             </div>
+
+            <div v-on:click="abrirAsistente" v-show="contenidoMenu">
+                <ul class="txt-dentro-menuHamburguesa">Asistente</ul>
+            </div>
         </div>
     </div>
 </template>
@@ -70,6 +74,10 @@ export default {
       } else {
         this.$router.push("/login");
       }
+      this.contenidoMenu = false;
+    },
+    abrirAsistente() {
+      this.$router.push("/asistente")
       this.contenidoMenu = false;
     }
 

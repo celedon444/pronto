@@ -2,64 +2,72 @@ const express = require('express')
 const router = express.Router()
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
-const conexion = require('../db')
+const pool = require('../db')
 
 const SECRET = 'pronto_santa_marta_2026'
 
-router.post('/registro', (req, res) => {
+// Registro de usuario
+router.post('/registro', async (req, res) => {
     const { usuario, contrasena } = req.body
     if (!usuario || !contrasena) {
         return res.status(400).json({ error: 'Usuario y contraseña son obligatorios' })
     }
-    const hash = bcrypt.hashSync(contrasena, 10)
-    const sql = 'INSERT INTO usuarios (usuario, contrasena) VALUES (?, ?)'
-    conexion.query(sql, [usuario, hash], (error) => {
-        if (error) {
-            if (error.code === 'ER_DUP_ENTRY') {
-                return res.status(400).json({ error: 'El usuario ya existe' })
-            }
-            return res.status(500).json({ error: 'Error al registrar usuario' })
-        }
+    try {
+        const hash = bcrypt.hashSync(contrasena, 10)
+        const sql = 'INSERT INTO usuarios (usuario, contrasena) VALUES ($1, $2)'
+        await pool.query(sql, [usuario, hash])
         res.json({ mensaje: 'Usuario registrado correctamente' })
-    })
+    } catch (error) {
+        if (error.code === '23505') {
+            return res.status(400).json({ error: 'El usuario ya existe' })
+        }
+        console.error(error)
+        return res.status(500).json({ error: 'Error al registrar usuario' })
+    }
 })
 
-router.post('/login', (req, res) => {
+// Login de usuario
+router.post('/login', async (req, res) => {
     const { usuario, contrasena } = req.body
-    const sql = 'SELECT * FROM usuarios WHERE usuario = ?'
-    conexion.query(sql, [usuario], (error, resultados) => {
-        if (error) return res.status(500).json({ error: 'Error en el servidor' })
-        if (resultados.length === 0) {
+    try {
+        const sql = 'SELECT * FROM usuarios WHERE usuario = $1'
+        const { rows } = await pool.query(sql, [usuario])
+        if (rows.length === 0) {
             return res.status(400).json({ error: 'Usuario no encontrado' })
         }
-        const usuarioDb = resultados[0]
+        const usuarioDb = rows[0]
         const contrasenaValida = bcrypt.compareSync(contrasena, usuarioDb.contrasena)
         if (!contrasenaValida) {
             return res.status(400).json({ error: 'Contraseña incorrecta' })
         }
         const token = jwt.sign({ usuario: usuarioDb.usuario }, SECRET, { expiresIn: '8h' })
         res.json({ mensaje: 'Login exitoso', usuario: usuarioDb.usuario, token })
-    })
+    } catch (error) {
+        console.error(error)
+        return res.status(500).json({ error: 'Error en el servidor' })
+    }
 })
 
-router.post('/recuperar', (req, res) => {
+// Recuperar/cambiar contraseña
+router.post('/recuperar', async (req, res) => {
     const { usuario, nuevaContrasena } = req.body
     if (!usuario || !nuevaContrasena) {
         return res.status(400).json({ error: 'Datos incompletos' })
     }
-    const sqlBuscar = 'SELECT * FROM usuarios WHERE usuario = ?'
-    conexion.query(sqlBuscar, [usuario], (error, resultados) => {
-        if (error) return res.status(500).json({ error: 'Error en el servidor' })
-        if (resultados.length === 0) {
+    try {
+        const sqlBuscar = 'SELECT * FROM usuarios WHERE usuario = $1'
+        const { rows } = await pool.query(sqlBuscar, [usuario])
+        if (rows.length === 0) {
             return res.status(404).json({ error: 'Usuario no encontrado' })
         }
         const hash = bcrypt.hashSync(nuevaContrasena, 10)
-        const sqlActualizar = 'UPDATE usuarios SET contrasena = ? WHERE usuario = ?'
-        conexion.query(sqlActualizar, [hash, usuario], (err) => {
-            if (err) return res.status(500).json({ error: 'Error al actualizar' })
-            res.json({ mensaje: 'Contraseña actualizada correctamente' })
-        })
-    })
+        const sqlActualizar = 'UPDATE usuarios SET contrasena = $1 WHERE usuario = $2'
+        await pool.query(sqlActualizar, [hash, usuario])
+        res.json({ mensaje: 'Contraseña actualizada correctamente' })
+    } catch (error) {
+        console.error(error)
+        return res.status(500).json({ error: 'Error al actualizar' })
+    }
 })
 
 module.exports = router

@@ -10,6 +10,7 @@ import MostrarRutasView from "@/views/MostrarRutasView.vue"
 import ReportesView from "@/views/ReportesView.vue"
 import BusesActivosView from "@/views/BusesActivosView.vue"
 import NoticiasView from "@/views/NoticiasView.vue"
+import AsistenteView from "../views/AsistenteView.vue"
 
 
 
@@ -23,7 +24,8 @@ const routes = [
   { path: "/administrarRutas", component: MostrarRutasView },
   { path: "/reportes", component: ReportesView },
   { path: "/busesActivos", component: BusesActivosView },
-  { path: "/noticias", component: NoticiasView }
+  { path: "/noticias", component: NoticiasView },
+  { path: "/asistente", component: AsistenteView }
 ]
 
 const router = createRouter({

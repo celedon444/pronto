@@ -106,10 +106,11 @@ export default {
       };
 
       // 2. Carga de datos principales (Buses, Rutas, Paradas)
+      const baseUrl = process.env.VUE_APP_API_URL || "http://localhost:3000"
       const [resBuses, resRutas, resParadas] = await Promise.all([
-        fetch("http://localhost:3000/buses", { headers }),
-        fetch("http://localhost:3000/rutas", { headers }),
-        fetch("http://localhost:3000/paradas", { headers }),
+        fetch(`${baseUrl}/buses`, { headers }),
+        fetch(`${baseUrl}/rutas`, { headers }),
+        fetch(`${baseUrl}/paradas`, { headers }),
       ]);
 
       // Si el token no es válido (401), mandamos al login
@@ -126,7 +127,7 @@ export default {
       for (const ruta of this.rutas) {
         try {
           const res = await fetch(
-            `http://localhost:3000/rutas/${ruta.id}/puntos`,
+            `${process.env.VUE_APP_API_URL || 'http://localhost:3000'}/rutas/${ruta.id}/puntos`,
             { headers },
           );
           const puntos = await res.json();
