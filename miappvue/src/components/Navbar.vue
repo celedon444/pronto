@@ -14,7 +14,7 @@
     </div>
 
   <nav class="contenedor-menu">
-  <div class="buses-activos">
+  <div class="buses-activos" :class="{ 'ocultar-mobile-no-logueado': !logueado }">
     <span class="indicador-online"></span>
     {{ BusesActivos }} Buses en línea
   </div>
@@ -292,6 +292,9 @@ export default {
     margin-right: 0;
     font-size: 11px;
     gap: 5px;
+  }
+  .ocultar-mobile-no-logueado {
+    display: none !important;
   }
   .contenedor-menu {
     gap: 8px;

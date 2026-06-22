@@ -46,4 +46,12 @@ export default {
   background: #052e867a !important; 
 }
 
+@media (max-width: 768px) {
+  .p-toast {
+    top: 20px !important;
+    width: 90% !important;
+    left: 5% !important;
+    right: 5% !important;
+  }
+}
 </style>

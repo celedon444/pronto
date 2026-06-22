@@ -172,16 +172,15 @@ export default {
 <style scoped>
 
 .noticias-container {
-  background: #f8fafc;
+  background: #0a0f18;
   min-height: 100vh;
   padding-bottom: 50px;
   font-family: "Segoe UI", sans-serif;
 }
 
 .noticias-header {
-  background: white;
+  background: #00193a;
   padding: 20px 10%;
-  border-bottom: 1px solid #e2e8f0;
   margin-bottom: 20px;
 }
 
@@ -222,7 +221,7 @@ export default {
 }
 
 .tarjeta-noticia {
-  background: white;
+  background: #f8fafc;
   border-radius: 8px;
   overflow: hidden;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
@@ -420,11 +419,7 @@ export default {
     align-self: center;
   }
   .consola-noticias {
-    flex-direction: column;
-    height: auto;
-    padding: 15px;
-    border-radius: 20px;
-    align-items: center;
+    display: none !important;
   }
   .mini-escena-bus {
     margin-right: 0;
@@ -433,6 +428,13 @@ export default {
   .contenedor-typing {
     font-size: 1.2rem;
     text-align: center;
+    width: 100%;
+  }
+  .texto-animado {
+    white-space: normal;
+    border-right: none;
+    width: auto;
+    animation: none;
   }
 }
 
@@ -447,7 +449,7 @@ export default {
 .consola-noticias {
   display: flex;
   align-items: center;
-  background: white;
+  background: #f8fafc;
   border: 1px solid #e2e8f0;
   border-radius: 50px;
   padding: 5px 20px;

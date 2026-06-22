@@ -447,9 +447,14 @@ label {
 @media (max-width: 768px) {
   .Tarjeta-Login {
     padding: 30px 25px;
-    width: 90%;
-    margin: 0 auto;
-    border-radius: 30px;
+    width: 100%;
+    min-height: 100vh;
+    margin: 0;
+    border-radius: 0;
+    border: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }
   .encabezado-login h1 {
     font-size: 1.8rem;
@@ -466,7 +471,10 @@ label {
     padding: 30px 20px;
   }
   .pantalla-completa {
-    background-position: center;
+    background: rgb(3, 24, 53);
+    background-image: none !important;
+    padding: 0;
+    align-items: stretch;
   }
 }
 </style>
