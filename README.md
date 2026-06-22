@@ -12,9 +12,9 @@ El proyecto fue diseñado con el objetivo de facilitar la consulta de rutas y la
 
 ![Página principal](./miappvue/src/assets/pronto-escritorio.png)
 
-### Sesión de noticias
+### Sección de noticias
 
-![Sesión noticias](./miappvue/src/assets/pronto-noticias.png)
+![Sección noticias](./miappvue/src/assets/pronto-noticias.png)
 
 ## Tecnologías utilizadas
 
