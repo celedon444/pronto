@@ -105,4 +105,26 @@ export default {
     font-weight: bold;
     color: #1e3a8a;
 }
+
+/* Responsividad */
+@media (max-width: 768px) {
+  .lista-buses {
+    width: 95%;
+  }
+  .intro-seccion h1 {
+    font-size: 28px;
+    text-align: center;
+  }
+  .intro-seccion p {
+    font-size: 16px;
+    text-align: center;
+    padding: 0 10px;
+  }
+  .contador-buses {
+    font-size: 18px;
+  }
+  .contenedor {
+    padding: 20px 0;
+  }
+}
 </style>

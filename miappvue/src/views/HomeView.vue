@@ -589,9 +589,58 @@ export default {
   }
 }
 
-@media (max-width: 768px) {     /* ajuste para celulares */
+@media (max-width: 1024px) {
+  .bloque-contenido {
+    flex-direction: column;
+    text-align: center;
+    gap: 40px;
+    padding-top: 40px;
+  }
+  .texto-bienvenida {
+    margin: 0 auto;
+  }
+  .botones-grupo {
+    justify-content: center;
+  }
+  .titulo-pronto {
+    font-size: 60px;
+  }
+  .subtitulo-web {
+    font-size: 28px;
+  }
+  .presentacion-principal {
+    padding: 20px 5%;
+  }
+}
+
+@media (max-width: 768px) {
+  .presentacion-principal {
+    padding: 20px 15px;
+  }
+  .titulo-pronto {
+    font-size: 45px;
+  }
+  .subtitulo-web {
+    font-size: 22px;
+  }
+  .parrafo-descripcion {
+    font-size: 16px;
+  }
+  .botones-grupo {
+    flex-direction: column;
+    gap: 15px;
+  }
+  .contenedor-bus :deep(.p-image img) {
+    max-width: 100%;
+  }
+  .seccion-servicios {
+    padding: 40px 15px;
+  }
+  .encabezado-seccion h2 {
+    font-size: 26px;
+  }
   .banner-azul {
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     padding: 10px;
   }
   .carrusel-track {

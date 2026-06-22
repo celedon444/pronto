@@ -202,4 +202,17 @@ export default {
 .boton-enviar:hover {
     background: #1e40af;
 }
+
+/* Responsividad */
+@media (max-width: 768px) {
+  .reportes-header {
+    padding: 15px;
+  }
+  .reportes-lista {
+    padding: 15px;
+  }
+  .reportes-input-contenedor {
+    padding: 15px;
+  }
+}
 </style>

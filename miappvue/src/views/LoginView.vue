@@ -442,4 +442,31 @@ label {
   text-align: center;
   margin-bottom: 5px;
 }
+
+/* Responsividad */
+@media (max-width: 768px) {
+  .Tarjeta-Login {
+    padding: 30px 25px;
+    width: 90%;
+    margin: 0 auto;
+    border-radius: 30px;
+  }
+  .encabezado-login h1 {
+    font-size: 1.8rem;
+  }
+  .encabezado-login p {
+    font-size: 0.9rem;
+  }
+  .btn-login-principal, .btn-secundario-glass {
+    padding: 14px;
+    font-size: 0.95rem;
+  }
+  .modal-caja {
+    width: 90%;
+    padding: 30px 20px;
+  }
+  .pantalla-completa {
+    background-position: center;
+  }
+}
 </style>

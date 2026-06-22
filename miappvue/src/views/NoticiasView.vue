@@ -408,6 +408,32 @@ export default {
   .modal-texto h2 {
     font-size: 22px;
   }
+  .noticias-header {
+    padding: 15px 5%;
+  }
+  .fila-encabezado {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 15px;
+  }
+  .banner-titulo {
+    align-self: center;
+  }
+  .consola-noticias {
+    flex-direction: column;
+    height: auto;
+    padding: 15px;
+    border-radius: 20px;
+    align-items: center;
+  }
+  .mini-escena-bus {
+    margin-right: 0;
+    margin-bottom: 10px;
+  }
+  .contenedor-typing {
+    font-size: 1.2rem;
+    text-align: center;
+  }
 }
 
 .fila-encabezado {       /* alinea el encabezado "NOTICIAS" con contenedor del bus y efecto typing */

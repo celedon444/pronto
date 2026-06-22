@@ -267,4 +267,49 @@ export default {
   font-weight: 600;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
+
+/* Responsividad */
+@media (max-width: 1024px) {
+  .header-principal {
+    padding: 10px 40px;
+  }
+}
+
+@media (max-width: 768px) {
+  .header-principal {
+    padding: 10px 15px;
+  }
+  .seccion-izquierda {
+    gap: 10px;
+  }
+  .logo-texto {
+    display: none; /* Ocultar texto del logo en celular para ahorrar espacio */
+  }
+  .logo-icono {
+    height: 45px; /* Logo más pequeño */
+  }
+  .buses-activos {
+    margin-right: 0;
+    font-size: 11px;
+    gap: 5px;
+  }
+  .contenedor-menu {
+    gap: 8px;
+  }
+  .boton-sesion, .boton-registro {
+    padding: 6px 10px;
+    font-size: 12px;
+  }
+  .texto-rodante {
+    display: none; /* Ocultar texto rodante en móviles para diseño más limpio */
+  }
+  .nombre-usuario-nav {
+    display: none; /* Mostrar solo el avatar en pantallas pequeñas */
+  }
+  .perfil-usuario-autenticado {
+    padding: 3px;
+    border: none;
+    background: transparent;
+  }
+}
 </style>

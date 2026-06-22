@@ -177,4 +177,18 @@ export default {
     font-size: 18px;
     margin-top: 60px;
 }
+
+/* Responsividad */
+@media (max-width: 768px) {
+  .contenedor-maximo {
+    padding: 20px 15px;
+  }
+  .header-rutas h1 {
+    font-size: 26px;
+  }
+  .contenedor-rutas {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+}
 </style>

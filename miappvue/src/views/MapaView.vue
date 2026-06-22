@@ -680,4 +680,44 @@ export default {
   padding: 15px;
   box-shadow: 0 4px 15px rgba(0,0,0,0.3);
 }
+
+/* Responsividad */
+@media (max-width: 768px) {
+  .contenedor {
+    padding: 15px 10px;
+  }
+  .titulo1 {
+    font-size: 1.2rem;
+  }
+  .buscador {
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+  .buscador input, .buscador button {
+    width: 100%;
+    max-width: 320px;
+  }
+  .stats {
+    gap: 15px;
+  }
+  .mini-carta {
+    width: 100%;
+    max-width: 320px;
+  }
+  #map {
+    width: 100%;
+    height: 400px;
+  }
+  .panelBus {
+    position: fixed;
+    top: auto;
+    bottom: 20px;
+    right: 50%;
+    transform: translateX(50%);
+    width: 90%;
+    max-width: 350px;
+    z-index: 9999;
+  }
+}
 </style>

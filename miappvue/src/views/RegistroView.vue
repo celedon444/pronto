@@ -376,4 +376,27 @@ label {
   font-family: Verdana, Geneva, Tahoma, sans-serif;
 
 }
+
+/* Responsividad */
+@media (max-width: 768px) {
+  .Tarjeta-Login {
+    padding: 30px 25px;
+    width: 90%;
+    margin: 0 auto;
+    border-radius: 30px;
+  }
+  .encabezado-login h1 {
+    font-size: 1.8rem;
+  }
+  .encabezado-login p {
+    font-size: 0.9rem;
+  }
+  .btn-login-principal, .btn-secundario-glass {
+    padding: 14px;
+    font-size: 0.95rem;
+  }
+  .pantalla-completa {
+    background-position: center;
+  }
+}
 </style>

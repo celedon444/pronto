@@ -184,4 +184,29 @@ button:disabled {
 button:not(:disabled):hover {
   background: #0f2970;
 }
+
+/* Responsividad */
+@media (max-width: 768px) {
+  .asistente-page {
+    padding: 15px 10px;
+  }
+  .asistente-card {
+    padding: 20px 15px;
+  }
+  .asistente-header h1 {
+    font-size: 1.5rem;
+  }
+  .entrada-chat {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  button {
+    width: 100%;
+    padding: 12px;
+  }
+  .mensaje-contenido {
+    max-width: 90%;
+    font-size: 0.95rem;
+  }
+}
 </style>

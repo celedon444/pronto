@@ -131,5 +131,24 @@
     gap: 8px;
 }
 
-
+/* Responsividad */
+@media (max-width: 768px) {
+    .footer {
+        padding: 30px 15px;
+    }
+    .footer-contenido {
+        flex-direction: column;
+        gap: 35px;
+        text-align: center;
+        align-items: center;
+    }
+    .footer-secciones, .footer-contactar {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .icono-redesSociales {
+        justify-content: center;
+    }
+}
 </style>

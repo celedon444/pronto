@@ -323,4 +323,22 @@ export default {
     background: #475569;
     color: white;
 }
+
+/* Responsividad */
+@media (max-width: 768px) {
+  .perfil-view {
+    padding: 20px 15px;
+  }
+  .Datos.personales {
+    padding: 20px 15px;
+    max-width: 100%;
+  }
+  .btn-cambiar-pass, .cerrar_sesion {
+    width: 100%;
+    justify-content: center;
+  }
+  .form-cambiar-pass, .alertaCerrarSesion {
+    max-width: 100%;
+  }
+}
 </style>
